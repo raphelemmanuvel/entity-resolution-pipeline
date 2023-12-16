@@ -3,6 +3,11 @@ version: "2"
 services:
   web_crawler:
     build: .
-    command: scrapy crawl web_crawler -a search_param=X -O tmp/active_listings_x.csv
+    command: scrapy crawl web_crawler -a search_param=X -O tmp/data/active_listings_x.csv
+    volumes:
+      - .:/app
+  format:
+    build: .
+    command: poetry run black .
     volumes:
       - .:/app

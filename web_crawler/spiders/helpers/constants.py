@@ -1,0 +1,4 @@
+SOURCE_BASE_URL = "https://firststop.sos.nd.gov"
+OWNER_STATUS_API_URL = f"{SOURCE_BASE_URL}/api/WebUserAccess/GET_USER_IS_OWNER"
+FILING_DETAIL_API_BASE_URL = f"{SOURCE_BASE_URL}/api/FilingDetail/business"
+DEFAULT_SOURCE_TYPE_ID = 54

@@ -144,6 +144,7 @@ class EntityResolutionRunner:
         self.net.toggle_physics(True)
         self.net.force_atlas_2based(overlap=1)
         self.net.save_graph(self.out_plot_file_name)
+        self.net.save_graph("docs/index.html") # Save latest copy for GitHub Pages       
 
     def run_er(self) -> None:
         self.logger.info("Running ER pipeline...")

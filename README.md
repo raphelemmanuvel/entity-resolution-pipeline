@@ -4,6 +4,10 @@
   <img src="tmp/plot/plot.png">
 </p>
 
+
+### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/active_listings_x.csv)
+### [Entity Relationship - Interactive Plot](https://raphelemmanuvel.github.io/entity-resolution-pipeline/)
+
 ### Usage
 
 
@@ -23,6 +27,8 @@ docker-compose run web_crawler
 docker-compose run er
 ```  
 
+### Format Python Scripts.
 
-### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/active_listings_x.csv)
-### [Entity Relationship Plot](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/plot/plot.png)
+```sh
+docker-compose run format
+```  

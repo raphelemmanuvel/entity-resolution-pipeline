@@ -1,5 +1,9 @@
 # Entity Resolution Pipeline
 
+<p align="center">
+  <img src="tmp/plot/plot.png">
+</p>
+
 ### Usage
 
 

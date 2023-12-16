@@ -22,3 +22,7 @@ docker-compose run web_crawler
 ```sh
 docker-compose run er
 ```  
+
+
+### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/active_listings_x.csv)
+### [Entity Relationship Plot](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/plot/plot.png)

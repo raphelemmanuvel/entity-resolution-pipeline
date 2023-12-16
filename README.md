@@ -1,7 +1,7 @@
 # Entity Resolution Pipeline
 
 <p align="center">
-  <img src="tmp/plot/plot.png">
+  <img src="docs/plot.png">
 </p>
 
 

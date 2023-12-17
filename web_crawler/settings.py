@@ -6,6 +6,10 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import logging
+import rich
+from rich.console import Console
+from rich.logging import RichHandler
 
 BOT_NAME = "web_crawler"
 
@@ -93,4 +97,31 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-LOG_LEVEL = "INFO"
+LOG_ENABLED = False
+
+
+def configure_rich_logging():
+    rich_handler = RichHandler(
+        rich_tracebacks=True,
+        markup=True,
+        tracebacks_word_wrap=False,
+        console=Console(width=255, color_system="auto"),
+    )
+
+    root_logger = logging.getLogger()
+
+    # Remove existing handlers from the root logger
+    for handler in root_logger.handlers[:]:
+        root_logger.removeHandler(handler)
+
+    # Set the logging level for the root logger
+    root_logger.setLevel(logging.INFO)
+
+    # Set the logging level for the RichHandler
+    rich_handler.setLevel(logging.INFO)
+
+    # Add the RichHandler to the root logger
+    root_logger.addHandler(rich_handler)
+
+
+configure_rich_logging()

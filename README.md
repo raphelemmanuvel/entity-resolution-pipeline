@@ -15,7 +15,7 @@ Explore an interactive plot showcasing entity relationships.
 ### [Data Source](https://firststop.sos.nd.gov/search/business)
 Access the original data source for the entity resolution.
 
-### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/latest/active_listings_X.csv)
+### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/latest/active_companies_X.csv)
 Find the dataset used for the entity resolution process.
 
 ## Requirements

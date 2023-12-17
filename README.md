@@ -52,7 +52,7 @@ docker-compose build view_er
 ```
 
 ```sh
-docker-compose run er
+docker-compose up view_er
 ```
 
 Access the ER visualization in your browser http://localhost:8000.

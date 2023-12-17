@@ -3,9 +3,10 @@ import os
 from datetime import date
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
+import logging
+
 from web_crawler.spiders import crawler
 from entity_resolution.er import EntityResolutionRunner
-import logging
 
 app = typer.Typer(
     rich_markup_mode="rich",
@@ -14,32 +15,44 @@ app = typer.Typer(
     pretty_exceptions_show_locals=False,
 )
 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] - %(message)s",
+    handlers=[logging.StreamHandler()],
+)
+
 today = str(date.today())
+
 DEFAULT_SEARCH_TERM = "X"
-DEFAULT_OUT_FILE_DIR = f"tmp/data/{today}"
+DEFAULT_OUT_DIR = f"tmp/data"
+DEFAULT_OUT_FILE_DIR = f"{DEFAULT_OUT_DIR}/{today}"
 DEFAULT_OUT_PLOT_DIR = f"tmp/plot/{today}"
 DEFAULT_OUT_FILE_NAME = "active_companies"
 DEFAULT_OUT_PLOT_FORMAT = "html"
 DEFAULT_OUT_FILE_FORMAT = "csv"
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] - %(message)s",
-    handlers=[logging.StreamHandler()]
-)
-
 
 @app.command("run_crawler")
 def run_crawler(
-    search_param: str = typer.Option(default=DEFAULT_SEARCH_TERM, help="Provide a value to search for active companies."),
-    output_dir: str = typer.Option(default=DEFAULT_OUT_FILE_DIR, help="Provide the output directory name where the file with crawled data has to be stored."),
-    output_filename: str = typer.Option(default=DEFAULT_OUT_FILE_NAME, help="Provide the name for the file in which the crawled data has to be stored."),
-    output_file_format: str = typer.Option(default=DEFAULT_OUT_FILE_FORMAT, help="Provide the output file format."),
+    search_param: str = typer.Option(
+        default=DEFAULT_SEARCH_TERM,
+        help="Provide a value to search for active companies.",
+    ),
+    output_dir: str = typer.Option(
+        default=DEFAULT_OUT_FILE_DIR,
+        help="Provide the output directory name where the file with crawled data has to be stored.",
+    ),
+    output_filename: str = typer.Option(
+        default=DEFAULT_OUT_FILE_NAME,
+        help="Provide the name for the file in which the crawled data has to be stored.",
+    ),
+    output_file_format: str = typer.Option(
+        default=DEFAULT_OUT_FILE_FORMAT, help="Provide the output file format."
+    ),
 ):
     """
     Run the web crawler to collect data on active companies.
     """
-    # Get project settings
     settings = get_project_settings()
 
     # Add custom settings for output file
@@ -52,16 +65,17 @@ def run_crawler(
             ): {
                 "format": output_file_format.lower(),
             },
+            os.path.join(
+                f"{DEFAULT_OUT_DIR}/latest",
+                f"{output_filename}_{search_param}.{output_file_format.lower()}",
+            ): {
+                "format": output_file_format.lower(),
+            },
         },
     )
 
-    # Create a CrawlerProcess with project settings
     process = CrawlerProcess(settings)
-
-    # Add spider to the process
     process.crawl("web_crawler", search_param=search_param)
-
-    # Start the crawling process
     process.start()
 
 
@@ -92,7 +106,7 @@ def view_er_in_browser(
     """
     View the entity resolution graph in a web browser.
     """
-    typer.launch(f"index.html")
+    typer.launch(f"docs/index.html")
 
 
 def main():

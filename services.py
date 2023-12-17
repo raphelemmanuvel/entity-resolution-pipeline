@@ -6,7 +6,7 @@ from scrapy.utils.project import get_project_settings
 import logging
 
 from web_crawler.spiders import crawler
-from entity_resolution.er import EntityResolutionRunner
+from entity_resolution.er import EntityResolutionRunner, DEFAULT_GH_PAGES_PATH
 
 app = typer.Typer(
     rich_markup_mode="rich",
@@ -106,7 +106,7 @@ def view_er_in_browser(
     """
     View the entity resolution graph in a web browser.
     """
-    typer.launch(f"docs/index.html")
+    typer.launch(DEFAULT_GH_PAGES_PATH)
 
 
 def main():

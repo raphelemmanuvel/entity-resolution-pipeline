@@ -50,12 +50,12 @@ docker-compose run er
 ```sh
 docker-compose build view_er
 ```
-            &&
+
 ```sh
 docker-compose run er
 ```
 
-Access the ER visualization in your browser [here](http://localhost:8000).
+Access the ER visualization in your browser http://localhost:8000.
 
 
 ### 4. Format Python Scripts.

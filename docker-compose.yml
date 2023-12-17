@@ -2,21 +2,29 @@ version: "2"
 
 services:
   web_crawler:
-    build: .
+    build:
+      context: .
+      target: builder
     command: poetry run er_pipeline run_crawler
     volumes:
       - .:/app
   er:
-    build: .
+    build:
+      context: .
+      target: builder
     command: poetry run er_pipeline run_er
     volumes:
       - .:/app
   view_er:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
   format:
-    build: .
+    build:
+      context: .
+      target: builder
     command: poetry run black .
     volumes:
       - .:/app

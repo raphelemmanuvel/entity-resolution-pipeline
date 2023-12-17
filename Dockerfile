@@ -25,3 +25,5 @@ FROM nginx:alpine
 
 # Copy static files from the builder stage (Entity Resolution Pipeline)
 COPY --from=builder /app/docs /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf

@@ -2,17 +2,29 @@ version: "2"
 
 services:
   web_crawler:
-    build: .
-    command: scrapy crawl web_crawler -a search_param=X -O tmp/data/active_listings_x.csv
+    build:
+      context: .
+      target: builder
+    command: poetry run er_pipeline run_crawler
     volumes:
       - .:/app
   er:
-    build: .
-    command: python3 entity_resolution/er.py tmp/data/active_listings_x.csv tmp/plot/active_listings_x.html
+    build:
+      context: .
+      target: builder
+    command: poetry run er_pipeline run_er
     volumes:
       - .:/app
+  view_er:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
   format:
-    build: .
+    build:
+      context: .
+      target: builder
     command: poetry run black .
     volumes:
       - .:/app

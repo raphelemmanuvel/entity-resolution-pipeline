@@ -7,6 +7,8 @@ from itertools import combinations
 import numpy as np
 import logging
 
+DEFAULT_GH_PAGES_PATH = "docs/index.html"
+
 class EntityResolutionRunner:
     def __init__(self, in_file_path: str, out_plot_path: str) -> None:
         """
@@ -144,27 +146,10 @@ class EntityResolutionRunner:
         self.net.toggle_physics(True)
         self.net.force_atlas_2based(overlap=1)
         self.net.save_graph(self.out_plot_file_name)
-        self.net.save_graph("docs/index.html") # Save latest copy for GitHub Pages
+        self.net.save_graph(DEFAULT_GH_PAGES_PATH) # Save latest copy for GitHub Pages
 
     def run_er(self) -> None:
         self.logger.info("Running ER pipeline...")
         self.__prepare_data()
         self.__generate_graph()
         self.logger.info("Done...")
-
-
-def main():
-    # Configure logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(message)s",
-    )
-    parser = argparse.ArgumentParser(description="Entity Resolution Runner..")
-    parser.add_argument("input_file", help="Path to the input CSV file..")
-    parser.add_argument("output_plot", help="Path to save the output plot..")
-    args = parser.parse_args()
-    EntityResolutionRunner(args.input_file, args.output_plot).run_er()
-
-
-if __name__ == "__main__":
-    main()

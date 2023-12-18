@@ -18,12 +18,15 @@ Access the original data source from which the data is crawled to use for this e
 ### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/latest/active_companies_X.csv)
 Find the crawled data used for the entity resolution process.
 
-## Requirements
-
-[Docker Desktop](https://www.docker.com/products/docker-desktop) is required to run this pipeline locally.
-
 
 ## Usage
+
+### a. Usage with Docker Desktop (Recommended)
+
+## Requirements
+
+Make sure [Docker Desktop](https://www.docker.com/products/docker-desktop) is installed and running.
+
 
 ### 1. Run web_crawler service to pull and parse data.
 
@@ -62,4 +65,55 @@ Access the ER visualization in your browser http://localhost:8000.
 
 ```sh
 docker-compose run format
+```
+
+
+### b. Usage with Poetry
+
+### 1. Install Poetry
+
+```sh
+pip install poetry
+```
+
+### 2. Install entity_resolution_pipeline dependencies
+
+```sh
+cd entity_resolution_pipeline
+
+poetry install
+```
+
+### 3. Run web_crawler service to pull and parse data.
+
+```sh
+poetry run er_pipeline run_crawler
+```
+
+### 4. Run er service to visualize entity relationships.
+
+```sh
+poetry run er_pipeline run_er
+```
+
+### 5. View generated entity relationships visualization in the browser.
+
+```sh
+poetry run er_pipeline view_er_in_browser
+```
+
+If you want to configure custom parameters for any of the above services with Poetry, use the below command to view configuration options for each service.
+
+```sh
+poetry run er_pipeline {service_name} --help
+```
+
+```sh
+eg: poetry run er_pipeline run_crawler --help
+```
+
+### 6. Format Python Scripts.
+
+```sh
+poetry run black .
 ```

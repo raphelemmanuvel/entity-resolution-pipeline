@@ -36,7 +36,7 @@ class EntityResolutionRunner:
                 "principal_address",
             ],
         )
-        df["entity_name"] = (
+        df["personal_entity_name"] = (
             df[["commercial_registered_agent", "registered_agent", "owner_name"]]
             .bfill(axis=1)
             .iloc[:, 0]
@@ -49,13 +49,13 @@ class EntityResolutionRunner:
             & df["registered_agent"].isnull()
             & df["commercial_registered_agent"].isnull(),
         ]
-        df["entity_type"] = np.select(
+        df["personal_entity_type"] = np.select(
             conditions,
             ["Commercial Registered Agent", "Registered Agent", "Owner"],
             default=np.nan,
         )
-        # Drop rows where entity_name is empty
-        self.df_filtered = df.dropna(subset=["entity_name"], how="all")
+        # Drop rows where personal_entity_name is empty
+        self.df_filtered = df.dropna(subset=["personal_entity_name"], how="all")
 
     def __format_subgraphs(self, G):
         # Get connected components (subgraphs) and assign colors
@@ -121,14 +121,14 @@ class EntityResolutionRunner:
         for _, row in self.df_filtered.iterrows():
             company_name = row["company_name"]
             company_id = row["company_id"]
-            entity_name = row["entity_name"]
-            entity_type = row["entity_type"]
-            entity_address = row["principal_address"]
+            personal_entity_name = row["personal_entity_name"]
+            personal_entity_type = row["personal_entity_type"]
+            address = row["principal_address"]
 
-            if entity_name:
+            if personal_entity_name:
                 G.add_node(
-                    str(entity_name),
-                    title=f"Name: {entity_name} | Relationship: {entity_type}",
+                    str(personal_entity_name),
+                    title=f"Name: {personal_entity_name} | Relationship: {personal_entity_type}",
                     shape="diamond",
                 )
 
@@ -139,15 +139,15 @@ class EntityResolutionRunner:
             )
 
             G.add_edge(
-                str(entity_name),
+                str(personal_entity_name),
                 str(company_name),
-                relationship=f"{entity_type}",
-                label=f"{entity_type}",
+                relationship=f"{personal_entity_type}",
+                label=f"{personal_entity_type}",
             )
 
             # Only consider addresses for companies
-            if entity_address:
-                company_addresses.add((company_name, entity_address))
+            if address:
+                company_addresses.add((company_name, address))
 
         G = self.__create_edge_based_on_address(G, company_addresses)
 

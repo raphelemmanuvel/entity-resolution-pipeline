@@ -13,10 +13,10 @@ The pipeline consists of a web crawler to pull and parse data and an entity reso
 Explore an interactive plot showcasing entity relationships.
 
 ### [Data Source](https://firststop.sos.nd.gov/search/business)
-Access the original data source for the entity resolution.
+Access the original data source from which the data is crawled to use for this entity resolution pipeline.
 
 ### [Data used for Entity Resolution](https://github.com/raphelemmanuvel/entity-resolution-pipeline/blob/main/tmp/data/latest/active_companies_X.csv)
-Find the dataset used for the entity resolution process.
+Find the crawled data used for the entity resolution process.
 
 ## Requirements
 

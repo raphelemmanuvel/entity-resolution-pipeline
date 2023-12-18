@@ -43,10 +43,10 @@ class WebCrawler(scrapy.Spider):
             url=f"{SOURCE_BASE_URL}/api/Records/businesssearch",
             method="POST",
             body=json.dumps(payload),
-            callback=self.retrieve_active_companies_list,
+            callback=self.handle_active_companies_list,
         )
 
-    def retrieve_active_companies_list(self, response):
+    def handle_active_companies_list(self, response):
         """
         Retrieve a list of active companies based on the search parameter.
 
@@ -74,10 +74,10 @@ class WebCrawler(scrapy.Spider):
                         "company_id": company_id,
                         "company_meta_info": company_meta_info,
                     },
-                    callback=self.get_owner_status,
+                    callback=self.handle_owner_status,
                 )
 
-    def get_owner_status(self, response):
+    def handle_owner_status(self, response):
         """
         Get owner status and initiate a request to retrieve company filing info.
         """

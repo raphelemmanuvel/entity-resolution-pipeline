@@ -36,7 +36,7 @@ class EntityResolutionRunner:
                 "principal_address",
             ],
         )
-        df["personal_entity_name"] = (
+        df["entity_name"] = (
             df[["commercial_registered_agent", "registered_agent", "owner_name"]]
             .bfill(axis=1)
             .iloc[:, 0]
@@ -49,13 +49,13 @@ class EntityResolutionRunner:
             & df["registered_agent"].isnull()
             & df["commercial_registered_agent"].isnull(),
         ]
-        df["personal_entity_type"] = np.select(
+        df["entity_type"] = np.select(
             conditions,
             ["Commercial Registered Agent", "Registered Agent", "Owner"],
             default=np.nan,
         )
-        # Drop rows where personal_entity_name is empty
-        self.df_filtered = df.dropna(subset=["personal_entity_name"], how="all")
+        # Drop rows where entity_name is empty
+        self.df_filtered = df.dropna(subset=["entity_name"], how="all")
 
     def __format_subgraphs(self, G):
         # Get connected components (subgraphs) and assign colors
@@ -74,7 +74,6 @@ class EntityResolutionRunner:
                     color=colors[i],
                     label=node_attributes.get("label", ""),
                     title=node_attributes.get("title", ""),
-                    shape=node_attributes.get("shape", "dot"),
                     font={"color": "black", "size": 10},
                 )
             for edge in G.edges:
@@ -121,15 +120,14 @@ class EntityResolutionRunner:
         for _, row in self.df_filtered.iterrows():
             company_name = row["company_name"]
             company_id = row["company_id"]
-            personal_entity_name = row["personal_entity_name"]
-            personal_entity_type = row["personal_entity_type"]
+            entity_name = row["entity_name"]
+            entity_type = row["entity_type"]
             address = row["principal_address"]
 
-            if personal_entity_name:
+            if entity_name:
                 G.add_node(
-                    str(personal_entity_name),
-                    title=f"Name: {personal_entity_name} | Relationship: {personal_entity_type}",
-                    shape="diamond",
+                    str(entity_name),
+                    title=f"Name: {entity_name} | Relationship: {entity_type}",
                 )
 
             G.add_node(
@@ -139,10 +137,10 @@ class EntityResolutionRunner:
             )
 
             G.add_edge(
-                str(personal_entity_name),
+                str(entity_name),
                 str(company_name),
-                relationship=f"{personal_entity_type}",
-                label=f"{personal_entity_type}",
+                relationship=f"{entity_type}",
+                label=f"{entity_type}",
             )
 
             # Only consider addresses for companies

@@ -102,7 +102,8 @@ poetry run er_pipeline run_er
 poetry run er_pipeline view_er_in_browser
 ```
 
-If you want to configure custom parameters for any of the above services with Poetry, use the below command to view configuration options for each service.
+If you want to configure custom parameters for any of the above services with Poetry, use the below command to view the configuration options for each service.
+Default custom parameters for these services are configured in ```services.py```.
 
 ```sh
 poetry run er_pipeline {service_name} --help

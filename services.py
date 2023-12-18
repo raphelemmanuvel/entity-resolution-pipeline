@@ -5,7 +5,7 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 import logging
 
-from web_crawler.spiders import crawler
+from web_crawler.spiders import rest_spider
 from entity_resolution.er import EntityResolutionRunner, DEFAULT_GH_PAGES_PATH
 
 app = typer.Typer(
@@ -75,7 +75,7 @@ def run_crawler(
     )
 
     process = CrawlerProcess(settings)
-    process.crawl("web_crawler", search_param=search_param)
+    process.crawl("rest_spider", search_param=search_param)
     process.start()
 
 

@@ -1,5 +1,5 @@
 import datetime
-from web_crawler.items import CompanyInfoItems
+from web_crawler.items import CompanyInfoItem
 
 
 class Parser:
@@ -27,7 +27,7 @@ class Parser:
         """
         return text.replace(" ", "_").replace("-", "_").replace("___", "_").lower()
 
-    def parse_data(self, company_filing_info, company_meta_info):
+    def parse_data(self, filing_info_data, meta_info_data):
         """
         Parse filing information and company meta information, combining them into a structured output.
 
@@ -37,27 +37,25 @@ class Parser:
         """
         filing_info = {
             self.__snakecase(info["LABEL"]): self.__normalize_text(info["VALUE"])
-            for info in company_filing_info["DRAWER_DETAIL_LIST"]
+            for info in filing_info_data["DRAWER_DETAIL_LIST"]
         }
-        company_meta_info_fmt = {
-            self.__snakecase(key): value for key, value in company_meta_info.items()
+        meta_info_formatted = {
+            self.__snakecase(key): value for key, value in meta_info_data.items()
         }
-        company_meta_info_fmt.update(
+        meta_info_formatted.update(
             {
-                "company_id": company_meta_info_fmt.pop("id"),
-                "company_name": company_meta_info_fmt["title"][0],
+                "company_id": meta_info_formatted.pop("id"),
+                "company_name": meta_info_formatted["title"][0],
                 "retrieved_at": datetime.datetime.now(),  # Add meta-info
             }
         )
-        company_info = company_meta_info_fmt | filing_info
 
-        item = CompanyInfoItems()
-        item.update(
-            {
-                field: company_info[field]
-                for field in item.fields.keys()
-                if field in company_info
-            }
-        )
+        combined_info = meta_info_formatted | filing_info
 
-        yield item
+        # Ensure all fields are present in parsed_data with default values of None
+        parsed_data = {
+            key: combined_info.get(key, None)
+            for key in CompanyInfoItem.__annotations__.keys()
+        }
+
+        yield CompanyInfoItem(**parsed_data)

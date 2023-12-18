@@ -74,6 +74,7 @@ class EntityResolutionRunner:
                     color=colors[i],
                     label=node_attributes.get("label", ""),
                     title=node_attributes.get("title", ""),
+                    shape=node_attributes.get("shape", "dot"),
                     font={"color": "black", "size": 10},
                 )
             for edge in G.edges:
@@ -128,6 +129,7 @@ class EntityResolutionRunner:
                 G.add_node(
                     str(entity_name),
                     title=f"Name: {entity_name} | Relationship: {entity_type}",
+                    shape="diamond",
                 )
 
             G.add_node(

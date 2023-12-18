@@ -97,8 +97,10 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
+CLOSESPIDER_ERRORCOUNT = 1
+
 RETRY_ENABLED = True
-RETRY_TIMES = 3
+RETRY_TIMES = 2
 RETRY_HTTP_CODES = [500, 502, 503, 504, 522, 524, 408, 400, 405]
 
 LOG_ENABLED = False
@@ -106,9 +108,7 @@ LOG_ENABLED = False
 
 def configure_rich_logging():
     rich_handler = RichHandler(
-        rich_tracebacks=True,
         markup=True,
-        tracebacks_word_wrap=False,
         console=Console(width=255, color_system="auto"),
     )
 

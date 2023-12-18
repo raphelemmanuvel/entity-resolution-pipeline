@@ -9,16 +9,16 @@ from .helpers.constants import (
 )
 
 
-class WebCrawler(scrapy.Spider):
+class RestSpider(scrapy.Spider):
     """
-    Scrapy spider for web crawling data from the North Dakota Secretary of State website.
+    Scrapy spider for fetching data from the North Dakota Secretary of State website REST API's.
     """
 
-    name = "web_crawler"
+    name = "rest_spider"
 
     def __init__(self, search_param: str):
         """
-        Initialize the WebCrawler with the specified search parameter.
+        Initialize the RestSpider with the specified search parameter.
 
         Parameters:
         - search_param (str): The parameter used for searching active companies.

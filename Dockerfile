@@ -1,7 +1,7 @@
 # Stage 1: Build Entity Resolution Pipeline
 FROM python:3.10.0-slim AS builder
 
-MAINTAINER Emmanuvel Raphel <emmanuvel@thinkdataworks.com>
+MAINTAINER Emmanuvel Raphel <raphelemmanuvel@gmail.com>
 
 ENV PYTHONUNBUFFERED 1
 
